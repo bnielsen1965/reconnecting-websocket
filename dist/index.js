@@ -205,5 +205,8 @@ var ReconnectingWebsocket = function (url, protocols, options) {
         }
         ws.removeEventListener(type, listener, options);
     };
+    this.getWebsocket = function () {
+        return ws;
+    };
 };
 module.exports = ReconnectingWebsocket;

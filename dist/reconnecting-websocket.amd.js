@@ -206,6 +206,9 @@ define("index", ["require", "exports"], function (require, exports) {
             }
             ws.removeEventListener(type, listener, options);
         };
+        this.getWebsocket = function () {
+            return ws;
+        };
     };
     return ReconnectingWebsocket;
 });

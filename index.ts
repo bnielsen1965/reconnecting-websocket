@@ -231,6 +231,10 @@ const ReconnectingWebsocket = function(
         }
         ws.removeEventListener(type, listener, options);
     };
+
+    this.getWebsocket = () => {
+        return ws;
+    };
 };
 
 export = ReconnectingWebsocket;
