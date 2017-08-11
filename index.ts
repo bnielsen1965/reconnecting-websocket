@@ -58,7 +58,11 @@ const reassignEventListeners = (ws: WebSocket, oldWs: WebSocket, listeners) => {
         });
     });
     if (oldWs) {
-        LEVEL_0_EVENTS.forEach(name => {ws[name] = oldWs[name]});
+        LEVEL_0_EVENTS.forEach(name => {
+            if (oldWs[name]) {
+                ws[name] = oldWs[name];
+            }
+        });
     }
 };
 
@@ -109,6 +113,7 @@ const ReconnectingWebsocket = function(
 
     const handleClose = () => {
         log('handleClose', {shouldRetry});
+        clearTimeout(connectingTimeout);
         retriesCount++;
         log('retries count:', retriesCount);
         if (retriesCount > config.maxRetries) {

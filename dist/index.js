@@ -40,7 +40,11 @@ var reassignEventListeners = function (ws, oldWs, listeners) {
         });
     });
     if (oldWs) {
-        LEVEL_0_EVENTS.forEach(function (name) { ws[name] = oldWs[name]; });
+        LEVEL_0_EVENTS.forEach(function (name) {
+            if (oldWs[name]) {
+                ws[name] = oldWs[name];
+            }
+        });
     }
 };
 var ReconnectingWebsocket = function (url, protocols, options) {
@@ -91,6 +95,7 @@ var ReconnectingWebsocket = function (url, protocols, options) {
     }, 0); };
     var handleClose = function () {
         log('handleClose', { shouldRetry: shouldRetry });
+        clearTimeout(connectingTimeout);
         retriesCount++;
         log('retries count:', retriesCount);
         if (retriesCount > config.maxRetries) {
